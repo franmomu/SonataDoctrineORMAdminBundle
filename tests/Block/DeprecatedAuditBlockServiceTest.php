@@ -35,6 +35,10 @@ class DeprecatedAuditBlockServiceTest extends BlockServiceTestCase
 
     protected function setUp(): void
     {
+        if (!property_exists(BlockServiceTestCase::class, 'templating')) {
+            $this->markTestSkipped('Test only available using SonataBlockBundle 3.x');
+        }
+
         parent::setUp();
         $this->simpleThingsAuditReader = $this->prophesize(SimpleThingsAuditReader::class);
 
