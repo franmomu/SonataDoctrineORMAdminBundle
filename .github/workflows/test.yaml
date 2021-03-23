@@ -45,6 +45,17 @@ jobs:
                       allowed-to-fail: false
                       variant: 'sonata-project/admin-bundle:"3.*"'
 
+        services:
+            postgres:
+                image: "postgres:13"
+                env:
+                    POSTGRES_PASSWORD: "postgres"
+
+                options: >-
+                    --health-cmd "pg_isready"
+                ports:
+                    - "5432:5432"
+
         steps:
             - name: Checkout
               uses: actions/checkout@v2
@@ -71,7 +82,7 @@ jobs:
                   composer-options: "--prefer-dist --prefer-stable"
 
             - name: Run Tests
-              run: make test
+              run: vendor/bin/simple-phpunit -c phpunit_pdo_pgsql.xml.dist --coverage-clover build/logs/clover.xml
 
             - name: Send coverage to Codecov
               uses: codecov/codecov-action@v1

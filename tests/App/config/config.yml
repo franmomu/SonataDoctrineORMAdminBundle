@@ -17,8 +17,7 @@ twig:
 
 doctrine:
     dbal:
-        driver: pdo_sqlite
-        path: "%kernel.cache_dir%/test_database.db"
+        url: "%env(resolve:DATABASE_URL)%"
     orm:
         auto_generate_proxy_classes: true
         auto_mapping: true
